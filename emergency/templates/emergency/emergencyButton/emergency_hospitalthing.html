@@ -1,0 +1,10 @@
+    <script src="{% static 'static.js' %}"></script>
+    <div class="mb-3">
+      <label for="dummy_hospital" class="form-label fw-semibold">Select Hospital (Nearby):</label>
+      <select id="dummy_hospital" name="dummy_hospital" class="form-select">
+        <option>Click 'Find Hospitals' to load nearby options</option>
+      </select>
+      <button type="button" class="btn btn-outline-success mt-2" onclick="findHospital()">
+        Find Nearby Hospitals
+      </button>
+    </div>

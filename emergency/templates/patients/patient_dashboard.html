@@ -1,0 +1,23 @@
+{% extends 'emergency/base.html' %}
+{% block title %}Patient Dashboard | SwiftAid{% endblock %}
+
+{% block content %}
+<div class="container my-5" style="max-width: 600px;">
+  <h2 class="mb-4 text-center fw-bold">🧑‍🦽 Patient Dashboard</h2>
+
+  <div class="d-grid gap-3">
+    <a href="{% url 'emergency_status' %}" class="btn btn-primary btn-lg">
+      🚨 Emergency Status
+    </a>
+    <a href="#" class="btn btn-secondary btn-lg disabled" tabindex="-1" aria-disabled="true">
+      📍 Hospital Geolocation (Coming Soon)
+    </a>
+  </div>
+
+  <div class="text-center mt-5">
+    <a href="{% url 'home' %}" class="btn btn-outline-secondary">
+      ⬅️ Return to Homepage
+    </a>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'emergency/base.html' %}
+{% block title %} {% endblock %}
+{% block content %}
+
+<h2>Patient Status</h2>
+
+{% if active_requests %}
+    <table border="2">
+        <tr>
+            <th>Patient</th>
+            <th>Emergency Type</th>
+            <th>Status</th>
+            <th>Description</th>
+            <th>Timestamp</th>
+        </tr>
+        {% for req in active_requests %}
+        <tr>
+            <td>{{ req.user.username }}</td>
+            <td>{{ req.get_emergency_type_display }}</td>
+            <td>{{ req.status }}</td>
+            <td>{{ req.description }}</td>
+            <td>{{ req.timestamp }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>No patients in progress or completed yet.</p>
+{% endif %}
+
+<a href="{% url 'staff_dashboard' %}">← Back to Dashboard</a>
+{% endblock %}

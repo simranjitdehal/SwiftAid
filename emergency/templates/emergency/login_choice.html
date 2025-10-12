@@ -1,0 +1,17 @@
+{% extends 'emergency/base.html' %}
+{% block title %} {% endblock %}
+{% block content %}
+<html>
+    <head>
+        <title>Choose Login role</title>
+    </head>
+    <body>
+        <h2>Log in as...</h2>
+        <ul>
+            <li><a href="{% url 'login_admin' %}">Admin</a></li>
+            <li><a href="{% url 'staff_login' %}">Staff</a></li>
+            <li><a href="{% url 'patient_login' %}">Patient</a></li>
+        </ul>
+    </body>
+</html>
+{% endblock %}

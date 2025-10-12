@@ -1,0 +1,88 @@
+{% extends 'emergency/base.html' %}
+{% block title %}Manage Patients{% endblock %}
+{% block content %}
+
+<h2 class="fw-bold text-center mb-4">Manage Patients</h2>
+
+
+<!-- Status Card -->
+<div class="card mb-4">
+  <div class="card-header bg-info text-white">
+    <h5 class="mb-0">Status</h5>
+  </div>
+  <div class="card-body">
+    <p><strong>Hospital:</strong> {{ hospital.name }}</p>
+    <p><strong>Available Staff Count:</strong> {{ staff_members|length }}</p>
+    <ul class="list-group">
+      {% for staff in staff_members %}
+        <li class="list-group-item">
+          {{ staff.user.username }} 
+          <span class="badge bg-success">Active: {{ staff.is_active }}</span>
+          <span class="badge bg-warning text-dark">Occupied: {{ staff.is_occupied }}</span>
+        </li>
+      {% empty %}
+        <li class="list-group-item text-muted">No staff members available</li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
+<!-- Messages -->
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+  {% endfor %}
+{% endif %}
+
+<!-- Patients Table -->
+<div class="table-responsive">
+  <table class="table table-bordered table-striped align-middle">
+    <thead class="table-dark">
+      <tr>
+        <th>User</th>
+        <th>Emergency Type</th>
+        <th>Staff</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for emergency in emergencies %}
+        <tr>
+          <td>{{ emergency.user.username }}</td>
+          <td>{{ emergency.emergency_type }}</td>
+          <td>
+            {% if not emergency.assigned_staff %}
+              <form method="POST" action="{% url 'assign_staff_to_patient' emergency.id %}" class="d-flex gap-2">
+                {% csrf_token %}
+                <select name="staff_id" class="form-select form-select-sm" required>
+                  {% for staff in staff_members %}
+                    <option value="{{ staff.id }}">
+                      {{ staff.user.get_full_name|default:staff.user.username }}
+                    </option>
+                  {% endfor %}
+                </select>
+                <button type="submit" class="btn btn-primary btn-sm">Assign</button>
+              </form>
+            {% else %}
+              {{ emergency.assigned_staff.user.get_full_name|default:emergency.assigned_staff.user.username }}
+            {% endif %}
+          </td>
+          <td>
+            <form method="POST" action="{% url 'delete_emergency' emergency.id %}">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Delete this patient?');">Delete</button>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<!-- Back Button -->
+<a href="{% url 'admin_dash' %}" class="btn btn-secondary mt-3">← Back to Dashboard</a>
+
+{% endblock %}

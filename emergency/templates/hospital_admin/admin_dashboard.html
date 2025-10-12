@@ -1,0 +1,32 @@
+{% extends 'emergency/base.html' %}
+{% block title %}Admin Dashboard | SwiftAid{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h2 class="text-center mb-4 fw-bold">🛠️ Admin Dashboard</h2>
+
+    <div class="list-group shadow-sm">
+        <a href="{% url 'manage_beds' %}" class="list-group-item list-group-item-action">
+            🛏️ Manage Beds
+        </a>
+        <a href="{% url 'manage_staff' %}" class="list-group-item list-group-item-action">
+            👩‍⚕️ Manage Staff
+        </a>
+        <a href="{% url 'view_emergencies' %}" class="list-group-item list-group-item-action">
+            🚨 View Emergency Requests
+        </a>
+        <a href="{% url 'manage_patients' %}" class="list-group-item list-group-item-action">
+            🧑‍🦽 Manage Patients
+        </a>
+        <a href="{% url 'manage_ambulances' %}" class="list-group-item list-group-item-action">
+            🚑 Manage Ambulances
+        </a>
+    </div>
+
+    <div class="text-center mt-5">
+        <a href="{% url 'home' %}" class="btn btn-outline-secondary">
+            ⬅️ Back to Home Page
+        </a>
+    </div>
+</div>
+{% endblock %}

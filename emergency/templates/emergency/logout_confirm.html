@@ -1,0 +1,15 @@
+<html>
+    <head>
+        <title>Confirm Logout</title>
+    </head>
+    <body>
+        <h2>Are you sure you want to logout?</h2>
+
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit">Yes</button>
+        </form>
+        <a href="{% url 'home' %}">Return to Dashboard</a>
+        
+    </body>
+</html>

@@ -1,0 +1,95 @@
+{% extends 'emergency/base.html' %}
+
+{% block title %}Home | SwiftAid{% endblock %}
+
+{% block content %}
+<style>
+    /* Top-right welcome message */
+    .top-right {
+        position: fixed;
+        top: 15px;
+        right: 20px;
+        z-index: 1000;
+    }
+
+    /* Cards styling */
+    .card.minimal {
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        transition: background-color 0.3s ease;
+    }
+
+    .card.minimal:hover {
+        background-color: #e2e6ea;
+    }
+
+    a {
+        text-decoration: none;
+    }
+</style>
+
+<!-- Welcome Message (Top-Right Corner) -->
+<div class="top-right">
+    {% if user.is_authenticated %}
+        <span class="me-3">Welcome, <strong>{{ user.username }}</strong></span>
+        
+        <!-- Show reset password for guests -->
+        {% if user.username|slice:":6" == "guest_" %}
+            <a href="{% url 'reset_guest_password' %}" class="btn btn-warning btn-sm me-2">Reset Password</a>
+        {% endif %}
+        
+        <a href="{% url 'logout' %}" class="btn btn-outline-dark btn-sm">Logout</a>
+    {% else %}
+        <a href="{% url 'login' %}" class="btn btn-dark btn-sm me-2">Log in</a>
+        <a href="{% url 'signup_choice' %}" class="btn btn-success btn-sm">Sign up</a>
+    {% endif %}
+</div>
+
+
+<!-- Main Heading -->
+<div class="text-center mb-5 mt-5 pt-4">
+    <h1 class="display-4 fw-bold">SwiftAid Dashboard</h1>
+    <p class="lead">Choose your role or report an emergency</p>
+</div>
+
+<!-- Role Cards -->
+<div class="row justify-content-center g-4 px-4">
+    <div class="col-md-3">
+        <a href="{% url 'admin_dash' %}">
+            <div class="card minimal text-center shadow-sm">
+                <div class="card-body">
+                    <h4>🏥 Hospital Admin</h4>
+                    <p>Manage hospitals & staff</p>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-3">
+        <a href="{% url 'staff_dashboard' %}">
+            <div class="card minimal text-center shadow-sm">
+                <div class="card-body">
+                    <h4>👨‍⚕️ Medical Staff</h4>
+                    <p>Access patient & emergency data</p>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-3">
+        <a href="{% url 'patient_dashboard' %}">
+            <div class="card minimal text-center shadow-sm">
+                <div class="card-body">
+                    <h4>🧑‍🦽 Patient</h4>
+                    <p>View your health records</p>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+
+<!-- Emergency Button -->
+<div class="text-center mt-5">
+    <a href="{% url 'emergency_form' %}" class="btn btn-danger btn-lg shadow">
+        🚨 Report Emergency
+    </a>
+</div>
+{% endblock %}

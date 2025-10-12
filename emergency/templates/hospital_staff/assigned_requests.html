@@ -1,0 +1,46 @@
+{% extends 'emergency/base.html' %}
+{% block title %} {% endblock %}
+{% block content %}
+
+<h2 class="mb-4">Assigned Requests</h2>
+
+{% if assigned_requests %}
+<div class="table-responsive">
+  <table class="table table-bordered table-striped align-middle">
+    <thead class="table-dark">
+      <tr>
+        <th>Patient</th>
+        <th>Emergency Type</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for req in assigned_requests %}
+      <tr>
+        <td>{{ req.user.username }}</td>
+        <td>{{ req.get_emergency_type_display }}</td>
+        <td>
+          <span class="badge 
+            {% if req.status == 'pending' %}bg-warning
+            {% elif req.status == 'completed' %}bg-success
+            {% else %}bg-secondary
+            {% endif %}
+          ">
+            {{ req.status|capfirst }}
+          </span>
+        </td>
+        <td>
+          <!-- Example action button (customize link and text as needed) -->
+          <a href="#" class="btn btn-sm btn-primary">Take Action</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<p>No ER request assigned to you.</p>
+{% endif %}
+
+{% endblock %}

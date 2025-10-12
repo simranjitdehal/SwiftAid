@@ -1,0 +1,39 @@
+{% extends 'emergency/base.html' %}
+{% block title %}Staff Dashboard{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="card shadow-sm mx-auto" style="max-width: 600px;">
+    <div class="card-header bg-primary text-white">
+      <h3 class="mb-0">Staff Dashboard</h3>
+    </div>
+    <div class="card-body">
+      <h4 class="mb-3">Welcome, {{ staff.user.username }}</h4>
+
+      <p><strong>Your hospital:</strong> {{ staff.hospital.name }}</p>
+
+      <p><strong>Status:</strong> 
+        {% if staff.is_active %}
+          <span class="badge bg-success">Active ✅</span>
+        {% else %}
+          <span class="badge bg-danger">Inactive ❌</span>
+        {% endif %}
+      </p>
+
+      <p><strong>Assigned?</strong> 
+        {% if staff.is_occupied %}
+          <span class="badge bg-warning text-dark">On Duty 🩺</span>
+        {% else %}
+          <span class="badge bg-info text-dark">Waiting 🏖️</span>
+        {% endif %}
+      </p>
+
+      <div class="d-flex flex-column gap-2 mt-4">
+        <a href="{% url 'assigned_requests' %}" class="btn btn-primary">View assigned ER</a>
+        <a href="{% url 'staff_patient_status' %}" class="btn btn-secondary">Check patient status</a>
+        <a href="{% url 'home' %}" class="btn btn-outline-dark mt-3">Return to homepage</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

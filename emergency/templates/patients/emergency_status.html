@@ -1,0 +1,48 @@
+{% extends 'emergency/base.html' %}
+{% block title %}Emergency Status{% endblock %}
+
+{% block content %}
+<div class="container my-5" style="max-width: 700px;">
+  <h2 class="text-center mb-4 fw-bold text-primary">🩺 Your Emergency Status</h2>
+
+  {% if emergency %}
+  <div class="card shadow-sm rounded-4 border-0" style="background: #f9faff;">
+    <ul class="list-group list-group-flush fs-5">
+      <li class="list-group-item d-flex justify-content-between align-items-center bg-white rounded-top-4 border-0">
+        <span><strong>Ambulance Dispatched</strong></span>
+        <span class="badge rounded-pill bg-{{ emergency.ambulance_dispatched|yesno:'success,danger' }} px-3 py-2 fs-6">
+          {{ emergency.ambulance_dispatched|yesno:"Yes,No" }}
+        </span>
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-center bg-white border-0">
+        <span><strong>Assigned Staff</strong></span>
+        <span>
+          {% if emergency.assigned_staff %}
+            {{ emergency.assigned_staff.user.username }} <small class="text-muted">({{ emergency.assigned_staff.role }})</small>
+          {% else %}
+            <em class="text-secondary fst-italic">Not Assigned Yet</em>
+          {% endif %}
+        </span>
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-center bg-white border-0">
+        <span><strong>Hospital</strong></span>
+        <span>{{ hospital.name }}</span>
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-center bg-white rounded-bottom-4 border-0">
+        <span><strong>Address</strong></span>
+        <span>{{ hospital.address }}</span>
+      </li>
+    </ul>
+  </div>
+  {% else %}
+  <p class="text-center fs-5 text-muted mt-5">No emergency request found.</p>
+  {% endif %}
+
+  <div class="text-center mt-4">
+    <a href="{% url 'patient_dashboard' %}" class="btn btn-primary btn-lg px-5 shadow-sm rounded-pill">
+      ← Return to Dashboard
+    </a>
+  </div>
+</div>
+
+{% endblock %}

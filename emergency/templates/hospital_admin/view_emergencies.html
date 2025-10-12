@@ -1,0 +1,74 @@
+{% extends 'emergency/base.html' %}
+{% block title %}Emergency Requests - SwiftAid{% endblock %}
+{% block content %}
+
+<div class="container my-5">
+    <h2 class="fw-bold text-center mb-4">🚨 Emergency Requests</h2>
+
+    <!-- Messages -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- Emergency Table -->
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>User</th>
+                    <th>Type</th>
+                    <th>Location</th>
+                    <th>Ambulance Needed?</th>
+                    <th>Ambulance Status</th>
+                    <th>Dispatch Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for em in emergencies %}
+                <tr>
+                    <td>{{ em.user.username }}</td>
+                    <td>{{ em.emergency_type }}</td>
+                    <td>{{ em.location }}</td>
+                    <td>
+                        <span class="badge {% if em.ambulance_required %}bg-primary{% else %}bg-secondary{% endif %}">
+                            {{ em.ambulance_required|yesno:"Yes,No" }}
+                        </span>
+                    </td>
+                    <td>
+                        {% if em.ambulance_dispatched %}
+                            <span class="badge bg-success">✅ Dispatched</span>
+                        {% else %}
+                            <span class="badge bg-danger">❌ Not dispatched</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if em.ambulance_required and not em.ambulance_dispatched %}
+                            <form method="POST" class="d-inline">
+                                {% csrf_token %}
+                                <input type="hidden" name="emergency_id" value="{{ em.id }}">
+                                <button type="submit" class="btn btn-sm btn-outline-success">
+                                    Dispatch Ambulance
+                                </button>
+                            </form>
+                        {% else %}
+                            <span class="text-muted">---</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Back button -->
+    <div class="text-center mt-4">
+        <a href="{% url 'admin_dash' %}" class="btn btn-outline-secondary">⬅️ Back to Dashboard</a>
+    </div>
+</div>
+
+{% endblock %}

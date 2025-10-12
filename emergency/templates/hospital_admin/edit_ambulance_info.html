@@ -1,0 +1,23 @@
+{% extends 'emergency/base.html' %} 
+{% block title %}edit Ambulance info{% endblock %}
+{% block content %}
+<div class="container my-5" style="max-width: 480px;">
+  <h2 class="text-center fw-bold mb-4">Edit Ambulance Info</h2>
+
+  <form method="post" class="p-4 bg-light rounded shadow">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="submit" class="btn btn-primary w-100 fw-semibold mt-3">
+      Save
+    </button>
+  </form>
+
+  <div class="text-center mt-4">
+    <a href="{% url 'admin_dash' %}" class="text-decoration-none text-secondary">
+      ← Back to dashboard
+    </a>
+  </div>
+</div>
+
+{% endblock %}

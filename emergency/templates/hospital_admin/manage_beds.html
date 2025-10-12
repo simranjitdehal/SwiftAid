@@ -1,0 +1,45 @@
+{% extends 'emergency/base.html' %}
+{% block title %}Manage Beds | SwiftAid{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h2 class="text-center fw-bold mb-4">🛏️ Manage Beds for <span class="text-primary">{{ hospital.name }}</span></h2>
+
+    {% if messages %}
+        <div class="alert alert-info">
+            {% for message in messages %}
+                <p class="mb-0">{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <form method="post" class="border p-4 rounded shadow-sm bg-light">
+        {% csrf_token %}
+        
+        <div class="form-check form-switch mb-3">
+            <input class="form-check-input" type="checkbox" id="is_active" name="is_active" {% if hospital.is_active %}checked{% endif %}>
+            <label class="form-check-label" for="is_active">Hospital Active</label>
+        </div>
+
+        <div class="mb-3">
+            <label for="capacity" class="form-label">Total Capacity</label>
+            <input type="number" class="form-control" id="capacity" name="capacity" value="{{ hospital.capacity }}" min="0" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="available_beds" class="form-label">Available Beds</label>
+            <input type="number" class="form-control" id="available_beds" name="available_beds" value="{{ hospital.available_beds }}" min="0" required>
+        </div>
+
+        <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-success fw-bold">Save Changes</button>
+        </div>
+    </form>
+
+    <div class="mt-4 text-center">
+        <a href="{% url 'admin_dash' %}" class="btn btn-outline-secondary">
+            ⬅️ Return to Dashboard
+        </a>
+    </div>
+</div>
+{% endblock %}

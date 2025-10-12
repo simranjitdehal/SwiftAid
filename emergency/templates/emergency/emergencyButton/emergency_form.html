@@ -1,0 +1,78 @@
+{% extends 'emergency/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5" style="max-width: 600px;">
+  <h2 class="mb-4 text-primary fw-bold text-center">🚨 Emergency Request Form</h2>
+
+
+  <form method="POST" class="bg-light p-4 rounded shadow-sm">
+    {% csrf_token %}
+
+    <div class="mb-3">
+      <label for="emergency_type" class="form-label fw-semibold">Emergency Type:</label>
+      <select id="emergency_type" name="emergency_type" class="form-select" required>
+        <option value="trauma">Trauma</option>
+        <option value="cardiac">Cardiac</option>
+        <option value="stroke">Stroke</option>
+        <option value="snakebite">Snakebite</option>
+        <option value="fire">Fire</option>
+        <option value="gunshot">Gunshot or Stab Wound</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="other_emergency_text" class="form-label">If Other, Describe:</label>
+      <input type="text" id="other_emergency_text" name="other_emergency_text" class="form-control" placeholder="Describe other emergency type">
+    </div>
+
+    <div class="mb-3">
+      <label for="location" class="form-label fw-semibold">Your Location:</label>
+      <input type="text" id="location" name="location" class="form-control" required placeholder="Enter your current location">
+      <button type="button" class="btn btn-outline-primary" onclick="getLocation()">Use My Location</button>
+    </div>
+
+    <div class="mb-3">
+      <label for="description" class="form-label">Description (Optional):</label>
+      <textarea id="description" name="description" class="form-control" rows="3" placeholder="Additional details..."></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label for="assigned_hospital" class="form-label fw-semibold">Select Hospital:</label>
+      <select id="assigned_hospital" name="assigned_hospital" class="form-select" required>
+        {% for hospital in hospitals %}
+          <option value="{{ hospital.id }}">{{ hospital.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    
+
+
+
+    <div class="mb-3">
+      <label for="severity" class="form-label fw-semibold">Severity:</label>
+      <select id="severity" name="severity" class="form-select" required>
+        <option value="low">Low</option>
+        <option value="medium" selected>Medium</option>
+        <option value="high">High</option>
+        <option value="critical">Critical</option>
+      </select>
+    </div>
+
+    <div class="form-check mb-4">
+      <input class="form-check-input" type="checkbox" id="ambulance_required" name="ambulance_required">
+      <label class="form-check-label" for="ambulance_required">
+        Request Ambulance? (ignore if not)
+      </label>
+    </div>
+
+    <div class="d-grid">
+      <button type="submit" class="btn btn-danger btn-lg fw-bold">Submit Emergency</button>
+    </div>
+  </form>
+</div>
+<a href="{% url 'home' %}" class="btn btn-outline-dark mt-3">Return to homepage</a>
+
+<script src="{% static 'static.js' %}"></script>
+{% endblock %}
