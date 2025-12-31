@@ -1,1 +1,1 @@
-web: gunicorn swiftaid_project.wsgi
+web: python manage.py collectstatic --noinput && gunicorn swiftaid_project.wsgi
