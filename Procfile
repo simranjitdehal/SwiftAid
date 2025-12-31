@@ -1,1 +1,2 @@
-web: python manage.py collectstatic --noinput && gunicorn swiftaid_project.wsgi
+web: sh -c "python manage.py collectstatic --noinput && gunicorn swiftaid_project.wsgi"
+
