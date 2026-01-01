@@ -1,6 +1,19 @@
 # SwiftAID
 
 A backend-driven hospital emergency and patient management system with role-based access control.
+Live link: https://web-production-10d0d6.up.railway.app
+Demo credentials:
+admin credentials:
+User ID:    manipal_hsp
+Password: Hsp1#admin
+
+staff credentials:
+ID: natalie
+pass:  Natalie@mnp
+
+patient cred:
+ID: price
+pass: codMW@2
 
 ## Overview
 
